@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>在庫管理</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* カスタムスタイル */
+        .container {
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mb-4">在庫管理</h1>
+        
+        <!-- 入出庫履歴の登録フォーム -->
+        <h2 class="mt-5 mb-3">入出庫履歴登録</h2>
+        <form action="/add_inventory_history" method="post">
+            <div class="form-group">
+                <label for="product_id">製品ID:</label>
+                <input type="text" class="form-control" id="product_id" name="product_id" required>
+            </div>
+            <div class="form-group">
+                <label for="type">種類:</label>
+                <select class="form-control" id="type" name="type" required>
+                    <option value="入庫">入庫</option>
+                    <option value="出庫">出庫</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="quantity">数量:</label>
+                <input type="number" class="form-control" id="quantity" name="quantity" required>
+            </div>
+            <button type="submit" class="btn btn-primary">登録</button>
+        </form>
+
+        <!-- 入出庫履歴の表示 -->
+        <h2 class="mt-5 mb-3">入出庫履歴</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">製品ID</th>
+                    <th scope="col">種類</th>
+                    <th scope="col">数量</th>
+                    <th scope="col">日付</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entry in history %}
+                <tr>
+                    <td>{{ entry[0] }}</td>
+                    <td>{{ entry[1] }}</td>
+                    <td>{{ entry[2] }}</td>
+                    <td>{{ entry[3] }}</td>
+                    <td>{{ entry[4] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- 在庫一覧 -->
+        <h2 class="mt-5 mb-3">在庫一覧</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">製品名</th>
+                    <th scope="col">数量</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr>
+                    <th scope="row">{{ product[0] }}</th>
+                    <td>{{ product[1] }}</td>
+                    <td>{{ product[2] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="/add_product" class="btn btn-primary">製品追加</a>
+    </div>
+
+    <!-- Bootstrap JS (optional) -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
